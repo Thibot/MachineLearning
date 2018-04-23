@@ -10,16 +10,15 @@ import pandas as pd
 def main():
     data = pd.read_csv("./Data/DataSet.csv", header = 0)
     outputContinus(data)
+    outputCategorical(data)
     
 def outputContinus(data):
     #continusValue = pandas.DataFrame
-    i = 0
-    for column in data:
-        if i in [1, 3, 11, 12, 13]:
-            print(data[i])
-        i += 1
+    res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
+    print(res)
     
 def outputCategorical(data):
-    print()
+    res = pd.DataFrame(data.as_matrix(["workclass","fnlwgt","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","fnlwgt","education","education-num","marital-status","occupation","relationship","race","sex"] )
+    print(res)
     
 main()
