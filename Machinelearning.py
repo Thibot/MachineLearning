@@ -10,7 +10,7 @@ import pandas as pd
 
 def main():
     array = []
-    rows  = csv.reader(open("DataSet.csv","r"))
+    rows  = csv.reader(open("./Data/DataSet.csv","r"))
     
     for row in rows:
         temp = []
@@ -18,14 +18,12 @@ def main():
             temp.append(value)
         array.append(temp)
     del array[0]
-    
-    writer = csv.writer(open("./data/team-name-DQR-ContinuousFeatures.csv", "wb"))
-   
+'''   
+    writer = csv.writer(open("./Data/team-name-DQR-ContinuousFeatures.csv", "wb"))
+ 
     for row in array:
         print(row)  
         writer.writerow(row)
                 
-
-
-if _name_ == "_main_":
-    main()
+'''
+main()
