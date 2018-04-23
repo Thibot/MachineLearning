@@ -6,6 +6,7 @@ Created on Mon Apr 23 21:49:39 2018
 """
 
 import csv
+import pandas as pd
 
 def main():
     array = []
