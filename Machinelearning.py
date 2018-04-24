@@ -33,7 +33,7 @@ def outputContinus(data):
         y=res.ix[:,'age']
     )
     data = Data(trace0)
-    
+    res = res.describe()
     py.plot(data, filename = 'basic-line')
     
 def outputCategorical(data):
