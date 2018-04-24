@@ -12,7 +12,7 @@ class Categorical:
     def __init__(self,data=[]):
         self.Dataframe = data
         
-    def Cardinality():
-        self.Dataframe.apply(pd.Series.nunique)
+    def Cardinality(self):
+        return self.Dataframe.apply(pd.Series.nunique)
         
     
