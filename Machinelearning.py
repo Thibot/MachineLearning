@@ -11,6 +11,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 from collections import Counter
 import operator
+from plotly.offline import download_plotlyjs
 
 
 def main():
@@ -24,18 +25,17 @@ def main():
           "|----------------------------------------------------------------|\n")
 
     line=""
-    while(line!="0" and line!="1" and line!="2" and line!="3" and line!="4" and line!="5"):
-        print("\n1 - Get continous features\n2 - Get categorical features\n0 - Exit\n")
-        line = input("Your choice is : ")
 
     while(line!="0"):
+        print("\n1 - Get continous features\n2 - Get categorical features\n0 - Exit\n")
+        line = input("Your choice is : ")
+        
         if line == "1":
             outputContinus(data)
         elif line == "2":
-           outputCategorical(data)
+            outputCategorical(data)
             
-        print("\n1 - Get continous features\n2 - Get categorical features\n0 - Exit\n")
-        line = input("Your choice is : ")
+        
 
     print("Bye")
     
@@ -44,7 +44,7 @@ def main():
 def outputContinus(data):
     #continusValue = pandas.DataFrame
     res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
-    #switchContinuous(res)
+    switchContinuous(res)
     reportContinus(res)
 
 def reportContinus(df):
@@ -101,7 +101,7 @@ def switchContinuous(data):
     cardinalities = getCardinality(data)
     for key, cardinality in cardinalities.iteritems():
         if cardinality < 10:
-            barPlot(data.as_matrix([key]),data.index.values,key)
+            barPlot(data.as_matrix([key]),key)
         else:
             histogram(data.as_matrix([key]),data.index.values,key)
         
@@ -110,7 +110,7 @@ def switchCategorical(data):
         barPlot(data.as_matrix([key]),key)
     
 def histogram(data,index,key):
-    plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
+    plotly.tools.set_credentials_file(username='Steyner', api_key='QweArHhlztVwiP0QUAfg')
     plotly.tools.set_config_file(world_readable=True,sharing='public')
     
     layout = go.Layout(
@@ -132,11 +132,18 @@ def histogram(data,index,key):
         )
     )
     )
+    array = []
+    for value in data:
+        array.append(value[0])
+        
+    trace = go.Histogram(
+            x=array,
+            name=key)
     
-    ToPlot =go.Figure(data=[go.Histogram(x=data,name=key)],layout=layout)
     
+    ToPlot = go.Figure(data=[trace],layout=layout)
     
-    plotly.offline.plot(ToPlot, filename = './Plots/Histogram/'+key)
+    plotly.offline.plot(ToPlot, filename = './Plots/Histogram/'+key+'.html')
     
 def barPlot(data,name):
     plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
@@ -186,7 +193,7 @@ def barPlot(data,name):
     ToPlot =go.Figure(data=data,layout=layout)
     
     
-    plotly.offline.plot(ToPlot, filename = './Plots/Bar/'+name)
+    plotly.offline.plot(ToPlot, filename = './Plots/Bar/'+name+'.html')
     
 
 main()
