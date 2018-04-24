@@ -109,10 +109,14 @@ def histogram(data,index,key):
         )
     )
     )
+    array = []
+    for value in data:
+        array.append(value[0])
+        
     trace = go.Histogram(
-            x=data,
-            y=index,
+            x=array,
             name=key)
+    
     
     ToPlot = go.Figure(data=[trace],layout=layout)
     
