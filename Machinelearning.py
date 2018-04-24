@@ -77,8 +77,34 @@ def histogram(data,index,key):
     
     py.plot(ToPlot, filename = key)
     
-def barPlot(data):
-    print("Hello")
+def barPlot(data,key):
+    plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
+    plotly.tools.set_config_file(world_readable=True,sharing='public')
+    
+    layout = go.Layout(
+    title=key,
+    xaxis=dict(
+        title='List of '+key,
+        titlefont=dict(
+            family='Courier New, monospace',
+            size=18,
+            color='#7f7f7f'
+        )
+    ),
+    yaxis=dict(
+        title='Number of iterations ',
+        titlefont=dict(
+            family='Courier New, monospace',
+            size=18,
+            color='#7f7f7f'
+        )
+    )
+    )
+    
+    ToPlot =go.Figure(data=[go.Bar(x=data,name=key)],layout=layout)
+    
+    
+    py.plot(ToPlot, filename = key)
     
 
 main()
