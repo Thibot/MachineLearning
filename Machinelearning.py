@@ -4,7 +4,7 @@ Created on Mon Apr 23 21:49:39 2018
 
 @author: Thibaut
 """
-
+#df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
 import pandas as pd
 import plotly
 import plotly.plotly as py
@@ -21,27 +21,13 @@ def outputContinus(data):
     #continusValue = pandas.DataFrame
     res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
     switchContinuous(res)
-    #py.iplot(res.ix[:,'age'], filename = 'test')
-    '''res.plot(x=res.index,y='age')
-    res.plot(x=res.index,y='fnlwgt')
-    res.plot(x=res.index,y='capital-gain')
-    res.plot(x=res.index,y='capital-loss')
-    res.plot(x=res.index,y='hours-per-week')'''
-    '''trace0 = go.Scatter(
-        x=[1, 2, 3, 4],
-        y=[10, 15, 13, 17]
-    )
-    trace1 = go.Scatter(
-        x=[1, 2, 3, 4],
-        y=[16, 5, 11, 9]
-    )
-    data = [trace0, trace1]
-    
-    py.plot(data, filename = 'basic-line')'''
-    
-    #res = res.describe()
-    return res
-    
+    reportContinus(res)
+
+def reportContinus(df):
+    #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
+    df = df.describe()
+    print(df)
+    print(df['occupation'].tolist().count(" ?"))
     
 def outputCategorical(data):
     res = pd.DataFrame(data.as_matrix(["workclass","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","education","education-num","marital-status","occupation","relationship","race","sex"] )
