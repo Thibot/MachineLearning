@@ -12,8 +12,6 @@ import plotly.graph_objs as go
 
 
 def main():
-    plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
-    plotly.tools.set_config_file(world_readable=True,sharing='public')
     
     data = pd.read_csv("./Data/DataSet.csv", header = 0)
     outputContinus(data)
@@ -41,7 +39,8 @@ def outputContinus(data):
     
     py.plot(data, filename = 'basic-line')'''
     
-    res = res.describe()
+    #res = res.describe()
+    return res
     
     
 def outputCategorical(data):
@@ -55,14 +54,45 @@ def switchContinuous(data):
     cardinalities = getCardinality(data)
     for key, cardinality in cardinalities.iteritems():
         if cardinality < 10:
-            print()  
+            BarPlot(data.as_matrix([key]))
         else:
-            print()
+            histogram(data.as_matrix([key]),data.index.values,key)
         
 def switchCategorical(data):
     for key in list(data):
         function(data.as_matrix([key]))
     
+def histogram(data,index,key):
+    plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
+    plotly.tools.set_config_file(world_readable=True,sharing='public')
+    
+    layout = go.Layout(
+    title=key,
+    xaxis=dict(
+        title='List of '+key,
+        titlefont=dict(
+            family='Courier New, monospace',
+            size=18,
+            color='#7f7f7f'
+        )
+    ),
+    yaxis=dict(
+        title='Number of iterations ',
+        titlefont=dict(
+            family='Courier New, monospace',
+            size=18,
+            color='#7f7f7f'
+        )
+    )
+    )
+    
+    ToPlot =go.Figure(data=[go.Histogram(x=data,name=key)],layout=layout)
+    
+    
+    py.plot(ToPlot, filename = key)
+    
+def BarPlot(data):
+    print("Hello")
     
 
 main()
