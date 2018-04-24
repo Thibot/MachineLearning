@@ -28,7 +28,7 @@ def outputContinus(data):
     res.plot(x=res.index,y='capital-gain')
     res.plot(x=res.index,y='capital-loss')
     res.plot(x=res.index,y='hours-per-week')'''
-    trace0 = go.Scatter(
+    '''trace0 = go.Scatter(
         x=[1, 2, 3, 4],
         y=[10, 15, 13, 17]
     )
@@ -38,7 +38,7 @@ def outputContinus(data):
     )
     data = [trace0, trace1]
     
-    py.plot(data, filename = 'basic-line')
+    py.plot(data, filename = 'basic-line')'''
     
     res = res.describe()
     
