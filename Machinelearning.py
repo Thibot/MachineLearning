@@ -9,13 +9,36 @@ import pandas as pd
 import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
+from collections import Counter
 
 
 def main():
     
     data = pd.read_csv("./Data/DataSet.csv", header = 0)
-    outputContinus(data)
-    outputCategorical(data)
+    print("\n"
+          "|----------------------------------------------------------------|\n"
+          "|------------Welcome on our machine learning project-------------|\n"
+          "|-------Developped in Python 3.6 please check your release-------|\n"
+          "|-------------------What do you want to do ? --------------------|\n"
+          "|----------------------------------------------------------------|\n")
+
+    line=""
+    while(line!="0" and line!="1" and line!="2" and line!="3" and line!="4" and line!="5"):
+        print("\n1 - Get continous features\n2 - Get categorical features\n0 - Exit\n")
+        line = input("Your choice is : ")
+
+    while(line!="0"):
+        if line == "1":
+            outputContinus(data)
+        elif line == "2":
+           outputCategorical(data)
+            
+        print("\n1 - Get continous features\n2 - Get categorical features\n0 - Exit\n")
+        line = input("Your choice is : ")
+
+    print("Bye")
+    
+    
     
 def outputContinus(data):
     #continusValue = pandas.DataFrame
@@ -27,7 +50,7 @@ def reportContinus(df):
     #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
     df = df.describe()
     print(df)
-    print(df['occupation'].tolist().count(" ?"))
+    #print(df['occupation'].tolist().count(" ?"))
     
 def outputCategorical(data):
     res = pd.DataFrame(data.as_matrix(["workclass","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","education","education-num","marital-status","occupation","relationship","race","sex"] )
@@ -40,13 +63,13 @@ def switchContinuous(data):
     cardinalities = getCardinality(data)
     for key, cardinality in cardinalities.iteritems():
         if cardinality < 10:
-            barPlot(data.as_matrix([key]))
+            barPlot(data.as_matrix([key]),data.index.values,key)
         else:
             histogram(data.as_matrix([key]),data.index.values,key)
         
 def switchCategorical(data):
     for key in list(data):
-        barPlot(data.as_matrix([key]))
+        barPlot(data.as_matrix([key]),key)
     
 def histogram(data,index,key):
     plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
@@ -101,10 +124,28 @@ def barPlot(data,key):
     )
     )
     
-    ToPlot =go.Figure(data=[go.Bar(x=data,name=key)],layout=layout)
+    print(data[0][0])
+    values=[]
+    for value in data:
+        if value[0] in values:
+            values[value[0]]+=1
+        else:
+            
+            values[value[0]]=1
+            
+    print(values)
+    trace=go.Bar(
+            x=data,
+            #y=,
+            name=key
+            )
+    
+    data=[trace]
+    
+    ToPlot =go.Figure(data=data,layout=layout)
     
     
-    py.plot(ToPlot, filename = key)
+    #py.plot(ToPlot, filename = key)
     
 
 main()
