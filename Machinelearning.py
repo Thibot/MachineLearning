@@ -15,10 +15,16 @@ def main():
 def outputContinus(data):
     #continusValue = pandas.DataFrame
     res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
-    print(res)
+    res.plot(x=res.index,y='age')
+    res.plot(x=res.index,y='fnlwgt')
+    res.plot(x=res.index,y='capital-gain')
+    res.plot(x=res.index,y='capital-loss')
+    res.plot(x=res.index,y='hours-per-week')
+    #print(res)
     
 def outputCategorical(data):
     res = pd.DataFrame(data.as_matrix(["workclass","fnlwgt","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","fnlwgt","education","education-num","marital-status","occupation","relationship","race","sex"] )
-    print(res)
+    #print(res)
     
+
 main()
