@@ -98,16 +98,16 @@ def histogram(data,index,key):
     ToPlot =go.Figure(data=[go.Histogram(x=data,name=key)],layout=layout)
     
     
-    py.plot(ToPlot, filename = key)
+    plotly.offline.plot(ToPlot, filename = './Plots/Histogram/'+key)
     
-def barPlot(data,key):
+def barPlot(data,name):
     plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
     plotly.tools.set_config_file(world_readable=True,sharing='public')
     
     layout = go.Layout(
-    title=key,
+    title=name,
     xaxis=dict(
-        title='List of '+key,
+        title='List of '+name,
         titlefont=dict(
             family='Courier New, monospace',
             size=18,
@@ -123,21 +123,24 @@ def barPlot(data,key):
         )
     )
     )
-    
-    print(data[0][0])
-    values=[]
+
+    values={}
     for value in data:
         if value[0] in values:
             values[value[0]]+=1
         else:
-            
             values[value[0]]=1
             
-    print(values)
+    X=[]
+    Y=[]
+    for key,value in values.items():
+        X.append(key)
+        Y.append(value)
+        
     trace=go.Bar(
-            x=data,
-            #y=,
-            name=key
+            x=X,
+            y=Y,
+            name=name
             )
     
     data=[trace]
@@ -145,7 +148,7 @@ def barPlot(data,key):
     ToPlot =go.Figure(data=data,layout=layout)
     
     
-    #py.plot(ToPlot, filename = key)
+    plotly.offline.plot(ToPlot, filename = './Plots/Bar/'+name)
     
 
 main()
