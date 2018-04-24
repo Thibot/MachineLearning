@@ -43,18 +43,33 @@ def main():
 def outputContinus(data):
     #continusValue = pandas.DataFrame
     res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
-    switchContinuous(res)
+    #switchContinuous(res)
     reportContinus(res)
 
 def reportContinus(df):
     #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
-    df = df.describe()
+    miss = []
+    for key in df:
+        miss.append(df[key].tolist().count(" ?")/df[key].count()*100)
+    df = df.describe().transpose()
+    df['miss'] = miss
+    print(df)
+    #print(df['occupation'].tolist().count(" ?"))
+    
+def reportCategorical(df):
+    #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
+    miss = []
+    for key in df:
+        miss.append(df[key].tolist().count(" ?")/df[key].count()*100)
+    df = df.describe().transpose()
+    df['miss'] = miss
     print(df)
     #print(df['occupation'].tolist().count(" ?"))
     
 def outputCategorical(data):
     res = pd.DataFrame(data.as_matrix(["workclass","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","education","education-num","marital-status","occupation","relationship","race","sex"] )
     switchCategorical(res)
+    reportCategorical(res)
  
 def getCardinality(data):
     return data.apply(pd.Series.nunique)
