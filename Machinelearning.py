@@ -17,11 +17,12 @@ def main():
     
     data = pd.read_csv("./Data/DataSet.csv", header = 0)
     outputContinus(data)
-    #outputCategorical(data)
+    outputCategorical(data)
     
 def outputContinus(data):
     #continusValue = pandas.DataFrame
     res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
+    switchContinuous(res)
     #py.iplot(res.ix[:,'age'], filename = 'test')
     '''res.plot(x=res.index,y='age')
     res.plot(x=res.index,y='fnlwgt')
@@ -44,8 +45,27 @@ def outputContinus(data):
     
     
 def outputCategorical(data):
-    res = pd.DataFrame(data.as_matrix(["workclass","fnlwgt","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","fnlwgt","education","education-num","marital-status","occupation","relationship","race","sex"] )
+    res = pd.DataFrame(data.as_matrix(["workclass","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","fnlwgt","education","education-num","marital-status","occupation","relationship","race","sex"] )
+    switchCategorical(res)
     print(res)
+ 
+def getCardinality(data):
+    return data.apply(pd.Series.nunique)
+
+def switchContinuous(data):
+    cardinalities = getCardinality(data)
+    for key, cardinality in cardinalities.iteritems():
+        if cardinality < 10:
+            tab = (data.as_matrix([key]))
+        else:
+            tab = (data.as_matrix([key]))
+        
+def switchCategorical(data):
+    print(data)
+
+
+    
+    
     
 
 main()
