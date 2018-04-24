@@ -10,6 +10,7 @@ import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
 from collections import Counter
+import operator
 
 
 def main():
@@ -54,21 +55,43 @@ def reportContinus(df):
     df = df.describe().transpose()
     df['miss'] = miss
     print(df)
+    df.to_csv('./Data/D-DQR-ContinuousFeatures.csv')
     #print(df['occupation'].tolist().count(" ?"))
     
 def reportCategorical(df):
     #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
     miss = []
+    temp = {}
     for key in df:
-        miss.append(df[key].tolist().count(" ?")/df[key].count()*100)
-    df = df.describe().transpose()
-    df['miss'] = miss
+        count = df[key].count()
+        miss = df[key].tolist().count(" ?")/df[key].count()*100
+        card = df[key].nunique()
+        values={}
+        for value in df[key]:
+            if value in values:
+                values[value]+=1
+            else:
+                values[value]=1
+        valuesS = sorted(values.items(), key=operator.itemgetter(1), reverse=True)
+        mode = valuesS[0][0]
+        modeF = valuesS[0][1]
+        modeP = modeF/count*100
+        if modeP == 100:
+            mode2 = '-'
+            modeF2 = '-'
+            modeP2 = '-'
+        else:
+            mode2 = valuesS[1][0]
+            modeF2 = valuesS[1][1]
+            modeP2 = modeF2/count*100
+        temp[key] = [count, miss, card, mode, modeF, modeP, mode2, modeF2, modeP2]
+    df = pd.DataFrame(temp, index=["count", "miss", "card", "mode", "modeF", "modeP", "mode2", "modeF2", "modeP2"]).transpose()
     print(df)
-    #print(df['occupation'].tolist().count(" ?"))
+    df.to_csv('./Data/D-DQR-CategoricalFeatures.csv')
     
 def outputCategorical(data):
     res = pd.DataFrame(data.as_matrix(["workclass","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","education","education-num","marital-status","occupation","relationship","race","sex"] )
-    switchCategorical(res)
+    #switchCategorical(res)
     reportCategorical(res)
  
 def getCardinality(data):
