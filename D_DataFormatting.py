@@ -6,6 +6,7 @@ Created on Wed Apr 25 22:46:03 2018
 """
 
 import numpy as np
+import pandas as pd
 
 #Function to read a .dat file and to return a double dimensions tab
 #nameFile = path of the file
@@ -20,3 +21,10 @@ def readDATFile(nameFile):
             ligne=[]
 
     return newArray
+
+
+def toCSV(values, fileName, columns):
+    df = pd.DataFrame(values,
+              columns = columns)
+    
+    df.to_csv("./" + fileName + ".csv")
