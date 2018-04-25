@@ -20,3 +20,9 @@ def readDATFile(nameFile):
             ligne=[]
 
     return newArray
+
+#Function deleting a column in a dataframe
+#DataFrame = dataframe object
+#ColumnName = Name of the column to delete
+def delColumn(DataFrame,ColumnName):
+    
