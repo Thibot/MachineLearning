@@ -35,6 +35,10 @@ def delRow(DataFrame,ColumnName, value):
     DataFrame = DataFrame[DataFrame[ColumnName] != value]
     return DataFrame
 
+#Function to save in csv values of dat file
+#DataFrame = an array of array with values
+#fileName  = name of the file
+#columns   = array of columns you want to export
 def toCSV(values, fileName, columns):
     df = pd.DataFrame(values,
               columns = columns)
