@@ -32,6 +32,7 @@ def delColumn(DataFrame,ColumnName):
 #rowName = Name of the row to delete
 def delRow(DataFrame,rowName, value):
     df = df[df[rowName] != value]
+    return df
 
 def toCSV(values, fileName, columns):
     df = pd.DataFrame(values,
