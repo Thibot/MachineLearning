@@ -4,6 +4,10 @@ Created on Mon Apr 23 21:49:39 2018
 
 @author: Thibaut
 """
+__author__ = "Team D"
+__credits__ = "Bastien Laise, Florian Hemery, Clément Croislebois and Thibaut Roudel"
+
+
 #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
 import pandas as pd
 import plotly
@@ -31,7 +35,7 @@ def main():
         line = input("Your choice is : ")
         
         if line == "1":
-            outputContinus(data)
+            outputContinuous(data)
         elif line == "2":
             outputCategorical(data)
             
@@ -41,14 +45,14 @@ def main():
     
     
     
-def outputContinus(data):
-    #continusValue = pandas.DataFrame
+def outputContinuous(data):
+    
     res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
     switchContinuous(res)
-    reportContinus(res)
+    reportContinuous(res)
 
-def reportContinus(df):
-    #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
+def reportContinuous(df):
+    
     miss = []
     for key in df:
         miss.append(df[key].tolist().count(" ?")/df[key].count()*100)
@@ -56,10 +60,10 @@ def reportContinus(df):
     df['miss'] = miss
     print(df)
     df.to_csv('./Data/D-DQR-ContinuousFeatures.csv')
-    #print(df['occupation'].tolist().count(" ?"))
+    
     
 def reportCategorical(df):
-    #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
+    
     miss = []
     temp = {}
     for key in df:
@@ -91,7 +95,7 @@ def reportCategorical(df):
     
 def outputCategorical(data):
     res = pd.DataFrame(data.as_matrix(["workclass","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","education","education-num","marital-status","occupation","relationship","race","sex"] )
-    #switchCategorical(res)
+    switchCategorical(res)
     reportCategorical(res)
  
 def getCardinality(data):
