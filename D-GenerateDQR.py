@@ -20,7 +20,9 @@ from plotly.offline import download_plotlyjs
 
 def main():
     
-    data = pd.read_csv("./Data/DataSet.csv", header = 0)
+    
+    
+    
     print("\n"
           "|----------------------------------------------------------------|\n"
           "|------------Welcome on our machine learning project-------------|\n"
@@ -29,6 +31,8 @@ def main():
           "|----------------------------------------------------------------|\n")
 
     line=""
+    
+    data = pd.read_csv("./Data/DataSet.csv", header = 0)
 
     while(line!="0"):
         print("\n1 - Get continous features\n2 - Get categorical features\n0 - Exit\n")
@@ -45,9 +49,10 @@ def main():
     
     
     
-def outputContinuous(data):
+def outputContinuous(data,columnName):
+    #columnName : Tableau de chaînes de caractères qui sont les noms des colonnes
     
-    res = pd.DataFrame(data.as_matrix(["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"]), columns=["age", "fnlwgt", "capital-gain", "capital-loss", "hours-per-week"])
+    res = pd.DataFrame(data.as_matrix(columnName), columns=columnName)
     switchContinuous(res)
     reportContinuous(res)
 
@@ -93,8 +98,8 @@ def reportCategorical(df):
     print(df)
     df.to_csv('./Data/D-DQR-CategoricalFeatures.csv')
     
-def outputCategorical(data):
-    res = pd.DataFrame(data.as_matrix(["workclass","education","education-num","marital-status","occupation","relationship","race","sex"]), columns=["workclass","education","education-num","marital-status","occupation","relationship","race","sex"] )
+def outputCategorical(data,columnName):
+    res = pd.DataFrame(data.as_matrix(columnName), columns=columnName )
     switchCategorical(res)
     reportCategorical(res)
  
