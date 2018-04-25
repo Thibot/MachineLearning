@@ -22,6 +22,12 @@ def readDATFile(nameFile):
 
     return newArray
 
+#Function deleting a column in a dataframe
+#DataFrame = dataframe object
+#ColumnName = Name of the column to delete
+def delColumn(DataFrame,ColumnName):
+    
+
 
 def toCSV(values, fileName, columns):
     df = pd.DataFrame(values,
