@@ -11,69 +11,40 @@ __credits__ = "Bastien Laise, Florian Hemery, Clément Croislebois and Thibaut R
 #df['Column_Name'].value_counts() <-- calcul la fréquence des données d'une colonne
 import pandas as pd
 import plotly
-import plotly.plotly as py
+import numpy as np
+#import plotly.plotly as py
 import plotly.graph_objs as go
-from collections import Counter
+#from collections import Counter
 import operator
-from plotly.offline import download_plotlyjs
-
-
-def main():
+#from plotly.offline import download_plotlyjs
+   
     
-    
-    
-    
-    print("\n"
-          "|----------------------------------------------------------------|\n"
-          "|------------Welcome on our machine learning project-------------|\n"
-          "|-------Developped in Python 3.6 please check your release-------|\n"
-          "|-------------------What do you want to do ? --------------------|\n"
-          "|----------------------------------------------------------------|\n")
-
-    line=""
-    
-    data = pd.read_csv("./Data/DataSet.csv", header = 0)
-
-    while(line!="0"):
-        print("\n1 - Get continous features\n2 - Get categorical features\n0 - Exit\n")
-        line = input("Your choice is : ")
-        
-        if line == "1":
-            outputContinuous(data)
-        elif line == "2":
-            outputCategorical(data)
-            
-        
-
-    print("Bye")
-    
-    
-    
-def outputContinuous(data,columnName):
+def outputContinuous(data,columnName,TypeActivity,fileName):
     #columnName : Tableau de chaînes de caractères qui sont les noms des colonnes
+    #fileName : Name of the files generated
     
     res = pd.DataFrame(data.as_matrix(columnName), columns=columnName)
-    switchContinuous(res)
-    reportContinuous(res)
+    switchContinuous(res,TypeActivity,fileName)
+    reportContinuous(res,TypeActivity,fileName)
 
-def reportContinuous(df):
+def reportContinuous(df,TypeActivity,fileName):
     
     miss = []
     for key in df:
-        miss.append(df[key].tolist().count(" ?")/df[key].count()*100)
+        miss.append(df[key].tolist().count("NaN")/df[key].count()*100)
     df = df.describe().transpose()
     df['miss'] = miss
-    print(df)
-    df.to_csv('./Data/D-DQR-ContinuousFeatures.csv')
+    df.to_csv('./Data/D-DQR/'+TypeActivity+"/"+fileName+'_continuous.csv')
     
     
-def reportCategorical(df):
+def reportCategorical(df,TypeActivity,fileName):
     
     miss = []
     temp = {}
     for key in df:
+        
         count = df[key].count()
-        miss = df[key].tolist().count(" ?")/df[key].count()*100
+        miss = df[key].tolist().count("NaN")/df[key].count()*100
         card = df[key].nunique()
         values={}
         for value in df[key]:
@@ -95,30 +66,30 @@ def reportCategorical(df):
             modeP2 = modeF2/count*100
         temp[key] = [count, miss, card, mode, modeF, modeP, mode2, modeF2, modeP2]
     df = pd.DataFrame(temp, index=["count", "miss", "card", "mode", "modeF", "modeP", "mode2", "modeF2", "modeP2"]).transpose()
-    print(df)
-    df.to_csv('./Data/D-DQR-CategoricalFeatures.csv')
+    #print(df)
+    df.to_csv('./Data/D-DQR/'+TypeActivity+"/"+fileName+'_categorical.csv')
     
-def outputCategorical(data,columnName):
+def outputCategorical(data,columnName,TypeActivity,fileName):
     res = pd.DataFrame(data.as_matrix(columnName), columns=columnName )
-    switchCategorical(res)
-    reportCategorical(res)
+    switchCategorical(res,TypeActivity,fileName)
+    reportCategorical(res,TypeActivity,fileName)
  
 def getCardinality(data):
     return data.apply(pd.Series.nunique)
 
-def switchContinuous(data):
+def switchContinuous(data,TypeActivity,fileName):
     cardinalities = getCardinality(data)
     for key, cardinality in cardinalities.iteritems():
         if cardinality < 10:
-            barPlot(data.as_matrix([key]),key)
+            barPlot(data.as_matrix([key]),key,TypeActivity,fileName)
         else:
-            histogram(data.as_matrix([key]),data.index.values,key)
+            histogram(data.as_matrix([key]),data.index.values,key,TypeActivity,fileName)
         
-def switchCategorical(data):
+def switchCategorical(data,TypeActivity,fileName):
     for key in list(data):
-        barPlot(data.as_matrix([key]),key)
+        barPlot(data.as_matrix([key]),key,TypeActivity,fileName)
     
-def histogram(data,index,key):
+def histogram(data,index,key,TypeActivity,fileName):
     plotly.tools.set_credentials_file(username='Steyner', api_key='QweArHhlztVwiP0QUAfg')
     plotly.tools.set_config_file(world_readable=True,sharing='public')
     
@@ -152,9 +123,9 @@ def histogram(data,index,key):
     
     ToPlot = go.Figure(data=[trace],layout=layout)
     
-    plotly.offline.plot(ToPlot, filename = './Plots/Histogram/'+key+'.html')
+    plotly.offline.plot(ToPlot, filename = './Plots/'+TypeActivity+"/Histogram/"+fileName+'_'+key+'.html')
     
-def barPlot(data,name):
+def barPlot(data,name,TypeActivity,fileName):
     plotly.tools.set_credentials_file(username='Thibot', api_key='8faf2ltiCOcQnqDoGq8y')
     plotly.tools.set_config_file(world_readable=True,sharing='public')
     
@@ -202,7 +173,4 @@ def barPlot(data,name):
     ToPlot =go.Figure(data=data,layout=layout)
     
     
-    plotly.offline.plot(ToPlot, filename = './Plots/Bar/'+name+'.html')
-    
-
-main()
+    plotly.offline.plot(ToPlot, filename = './Plots/'+TypeActivity+"/Bar/"+fileName+'_'+name+'.html')

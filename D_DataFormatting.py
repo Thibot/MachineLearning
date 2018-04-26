@@ -21,6 +21,8 @@ def delRow(DataFrame,ColumnName, value):
 
 def DATtoCSV(OriginFile,fileName,Columns):
     
-    data = pd.read_csv(OriginFile,sep='\s+',names=Columns)
+    data = pd.read_csv(OriginFile,sep='\s+',names=Columns,na_values={"HeartRate": [" ?"],"Hand_Temperature": [" ?"],"Chest_Temperature": [" ?"],"Ankle_Temperature": [" ?"]},keep_default_na=False)
     
     data.to_csv(fileName,columns=Columns)
+    
+    print(fileName+"   :   Generated\n")
