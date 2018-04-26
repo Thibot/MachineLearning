@@ -26,4 +26,15 @@ def main():
     print("Accuracy score : \n", accuracy_score(y_test, y_pred))
     print("Cross validation score : \n", cross_val_score(clf, X, y, cv = 5))
     
+    clf = RandomForestClassifier(max_depth=2, random_state=0, criterion = "entropy")
+    
+    clf.fit(X_train, y_train)
+    
+    y_pred = clf.predict(X_test)
+    
+    print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
+    print("Classification report : \n", classification_report(y_test, y_pred))
+    print("Accuracy score : \n", accuracy_score(y_test, y_pred))
+    print("Cross validation score : \n", cross_val_score(clf, X, y, cv = 5))
+    
 main()# -*- coding: utf-8 -*-
