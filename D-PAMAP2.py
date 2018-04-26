@@ -7,6 +7,7 @@ Created on Wed Apr 25 20:00:54 2018
 import D_DataFormatting as D_DF
 import D_GenerateDQR as D_DQR
 import pandas as pd
+from modelsGenerator import decisionTree, randomForest
 
 
 def main():
@@ -152,6 +153,13 @@ def main():
 #    for i in [1,5,6,8,9]:
 #        D_DQR.outputContinuous(data,ContinuousColumns,"Optional","subject10"+str(i)+"_clean")
 #        D_DQR.outputCategorical(data,CategoricalColumns,"Optional","subject10"+str(i)+"_clean")
+    
+    subjects      = pd.read_csv("./subject.csv")
+    subjectModel  = decisionTree(subjects, "Subject ID", 0)
+    subjectNumber = [0,30,180,83,75,193,1] 
+    
+    
+    
     
 
 main()
