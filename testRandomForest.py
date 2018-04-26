@@ -1,34 +1,29 @@
 # -*- coding: utf-8 -*-
 
-from sklearn import tree
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix  
-import pandas as pd
-import graphviz as gr
-import numpy as np
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import make_classification
+from sklearn import datasets
+import pandas as pd
 
 def main():
     
     data = pd.read_csv("./bill_authentication.csv")
+
+    X = data.drop(['Class'], axis=1)   
+    y = data['Class'] 
     
-    data['is_train'] = np.random.uniform(0, 1, len(data)) <= .75
-    
-    train, test = data[data['is_train']==True], data[data['is_train']==False]
-    
-    features = data.columns[:4]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
     
     clf = RandomForestClassifier(max_depth=2, random_state=0)
     
-    y = train['Class']
-    y_test = train[features]
-    clf.fit(y_test, y)
+    clf.fit(X_train, y_train)
     
-    y_pred = clf.predict(test[features])
-
-    print(confusion_matrix(y_test, y_pred))  
-    print(classification_report(y_test, y_pred))
+    y_pred = clf.predict(X_test)
+    
+    print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
+    print("Classification report : \n", classification_report(y_test, y_pred))
+    print("Accuracy score : \n", accuracy_score(y_test, y_pred))
+    print("Cross validation score : \n", cross_val_score(clf, X, y, cv = 5))
     
 main()# -*- coding: utf-8 -*-
-
