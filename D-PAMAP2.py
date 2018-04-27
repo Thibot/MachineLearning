@@ -7,7 +7,7 @@ Created on Wed Apr 25 20:00:54 2018
 import D_DataFormatting as D_DF
 import D_GenerateDQR as D_DQR
 import pandas as pd
-from modelsGenerator import decisionTree, randomForest
+from modelsGenerator import decisionTree, decisionTreeWithEntropy, randomForest, randomForestWithEntropy, nearestNeighbors
 
 
 def main():
@@ -156,10 +156,42 @@ def main():
     
     subjects      = pd.read_csv("./subject.csv")
     subjectModel  = decisionTree(subjects, "Subject ID", 0)
-    subjectNumber = [0,30,180,83,75,193,1] 
+    subject       = [0,30,180,83,75,193,1] 
+    subjectNumber = subjectModel.predict([subject])
     
+    print(subjectNumber)
     
+    if (subjectNumber == 101):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject101_clean.csv")
+        dataModel = decisionTree(dataframe, "ActivityID", 5)
+        
+    if (subjectNumber == 102):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject102_clean.csv")
+        dataModel = decisionTreeWithEntropy(dataframe, "ActivityID", 5)
     
+    if (subjectNumber == 103):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject103_clean.csv")
+        dataModel = randomForest(dataframe, "ActivityID", 5)
+        
+    if (subjectNumber == 104):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject104_clean.csv")
+        dataModel = randomForestWithEntropy(dataframe, "ActivityID", 5)
+        
+    if (subjectNumber == 105):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject105_clean.csv")
+        dataModel = nearestNeighbors(dataframe, "ActivityID", 5)
+        
+    if (subjectNumber == 106):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject106_clean.csv")
+        dataModel = decisionTree(dataframe, "ActivityID", 5)
+    
+    if (subjectNumber == 107):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject107_clean.csv")
+        dataModel = decisionTreeWithEntropy(dataframe, "ActivityID", 5)
+        
+    if (subjectNumber == 108):
+        dataframe = pd.read_csv("./DataClean/PAMAP2_Dataset/Protocol/subject108_clean.csv")
+        dataModel = nearestNeighbors(dataframe, "ActivityID", 5)
     
 
 main()

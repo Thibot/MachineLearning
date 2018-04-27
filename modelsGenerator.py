@@ -32,9 +32,9 @@ def randomForest(data, target, cv):
     # predict target from test array
     y_pred = clf.predict(X_test)
     
-    print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
-    print("Classification report : \n", classification_report(y_test, y_pred))
-    if (cv != 0):
+    if (cv != 0): 
+        print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
+        print("Classification report : \n", classification_report(y_test, y_pred))
         print("Accuracy score : \n", accuracy_score(y_test, y_pred))
         print("Cross validation score : \n", cross_val_score(clf, X_test, y_test, cv = cv))
     
@@ -59,9 +59,9 @@ def randomForestWithEntropy(data, target, cv):
     # predict target from test array
     y_pred = clf.predict(X_test)
     
-    print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
-    print("Classification report : \n", classification_report(y_test, y_pred))
     if (cv != 0):
+        print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
+        print("Classification report : \n", classification_report(y_test, y_pred))
         print("Accuracy score : \n", accuracy_score(y_test, y_pred))
         print("Cross validation score : \n", cross_val_score(clf, X_test, y_test, cv = cv))
     
@@ -90,9 +90,9 @@ def decisionTree(data, target, cv):
     # predict target from test array
     y_pred = clf.predict(X_test)
 
-    print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))    
-    print("Classification report : \n", classification_report(y_test, y_pred))
     if (cv != 0):
+        print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))    
+        print("Classification report : \n", classification_report(y_test, y_pred))
         print("Accuracy score : \n", accuracy_score(y_test, y_pred))
         print("Cross validation score : \n", cross_val_score(clf, X_test, y_test, cv = cv))
 
@@ -126,9 +126,9 @@ def decisionTreeWithEntropy(data, target, cv):
     # predict target from test array
     y_pred = clf.predict(X_test)
 
-    print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))    
-    print("Classification report : \n", classification_report(y_test, y_pred)) 
     if (cv != 0):
+        print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))    
+        print("Classification report : \n", classification_report(y_test, y_pred)) 
         print("Accuracy score : \n", accuracy_score(y_test, y_pred))
         print("Cross validation score : \n", cross_val_score(clf, X_test, y_test, cv = cv))
 
@@ -157,10 +157,9 @@ def nearestNeighbors(data, target, cv):
     
     # predict target from test array
     y_pred = clf.predict(X_test)    
-
-    print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
-    print("Classification report : \n", classification_report(y_test, y_pred))
     if (cv != 0):
+        print("Confusion matrix : \n", confusion_matrix(y_test, y_pred))   
+        print("Classification report : \n", classification_report(y_test, y_pred))
         print("Accuracy score : \n", accuracy_score(y_test, y_pred))
         print("Cross validation score : \n", cross_val_score(clf, X_test, y_test, cv = cv))
     
