@@ -128,7 +128,7 @@ def main():
 #             "Ankle_Temperature","Ankle_3Dacceleration16_X","Ankle_3Dacceleration16_Y",
 #             "Ankle_3Dacceleration16_Z","Ankle_3Dgyroscop_X","Ankle_3Dgyroscop_Y","Ankle_3Dgyroscop_Z","Ankle_3Dmagnetometer_X",
 #             "Ankle_3Dmagnetometer_Y","Ankle_3Dmagnetometer_Z"]
-#    
+#    #Recreate the DQR based on the data cleaned
 #    for i in range(1,9):
 #        data = pd.read_csv("./Data/PAMAP2_Dataset/Protocol/subject10"+str(i)+"_clean.csv", header = 0)
 #        D_DQR.outputContinuous(data,ContinuousColumns,"Protocol","subject10"+str(i)+"_clean")
